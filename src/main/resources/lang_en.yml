@@ -1,0 +1,21 @@
+invalid-arguments: "&cInvalid arguments! Try: /lunerite %command%"
+no-permission: "&cYou do not have permission to execute this command."
+unknown-player: "&cUnknown player!"
+not-a-number: "&cAmount must be a number!"
+invalid-balance: "&cA player''s balance cannot be less than 0."
+
+help:
+  - "&8---=====■■■■[&eLunerite&8]■■■■=====---"
+  - "&eSub-command arguments: <required> [optional]  |  Description"
+  - "add <username> <amount> - Adds the specified amount to a player's balance."
+  - "balance <username> - Shows a player's balance."
+  - "remove <username> <amount> - Removes the specified amount from a player's balance."
+  - "set <username> <amount> = Set's a player's balance to the specified amount."
+  - "&8---=====■■■■[&eLunerite&8]■■■■=====---"
+
+balance-other: "&6%username%''s &ebalance: &a%balance%"
+balance: "&6Your &ebalance: &a%balance%"
+
+balance-add: "&aYou added %amount% to %username%''s balance. Their new total is %balance%"
+balance-remove: "&aYou removed %amount% from %username%''s balance. Their new total is %balance%"
+balance-set: "&a%username%''s new balance is %balance%"

@@ -1,0 +1,13 @@
+name: Lunerite
+description: Simple secondary economy plugin.
+
+author: SavageAvocado
+website: savagedev.net
+
+main: net.savagedev.lunerite.Lunerite
+api-version: "1.13"
+version: ${version}
+
+commands:
+  lunerite:
+    description: View your Lunerite balance.

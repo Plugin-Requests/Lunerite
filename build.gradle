@@ -1,0 +1,38 @@
+plugins {
+    id 'com.github.johnrengelman.shadow' version '6.0.0'
+    id 'java'
+}
+
+group 'net.savagedev'
+version '1.0.1-RELEASE'
+
+repositories {
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+    maven { url 'https://jitpack.io' }
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    shadow 'org.spigotmc:spigot:1.16.1-R0.1-SNAPSHOT'
+
+    compile 'com.github.SavageAvocado:SpigotUpdateChecker:1.0.0'
+    compile 'com.zaxxer:HikariCP:3.4.5'
+    compile 'io.sentry:sentry:4.0.0'
+}
+
+processResources {
+    from(sourceSets.main.resources.srcDirs) {
+        expand 'version': project.version
+        include 'plugin.yml'
+    }
+}
+
+shadowJar {
+    getArchiveFileName().set(project.name + '-' + project.version + '.jar')
+    configurations = [project.configurations.compile]
+}
+
+artifacts {
+    shadowJar
+}

@@ -1,0 +1,12 @@
+locale: "en" # This will automatically generate a new lang file with the "en" locale by default for you.
+
+storage:
+  backend: "YAML" # Default: YAML Values: MySQL, JSON, YAML
+  sql: # Only required if you are using an SQL database.
+    host: "127.0.0.1"
+    port: 3306 # Default MySQL port: 3306
+    database: "ADatabase"
+    username: "Lunerite"
+    password: "p4s5w0rd"
+
+default-balance: 0.0 # The amount of Lunerite currency a new player should start off with.
