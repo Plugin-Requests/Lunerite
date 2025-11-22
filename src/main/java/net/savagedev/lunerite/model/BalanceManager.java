@@ -48,7 +48,11 @@ public class BalanceManager {
         });
     }
 
-    public CompletableFuture<Double> getBalance(final UUID uuid) {
+    public double getBalance(final Player player) {
+        return this.balances.get(player.getUniqueId());
+    }
+
+    public CompletableFuture<Double> getBalanceAsync(final UUID uuid) {
         return CompletableFuture.supplyAsync(() -> {
             if (this.isLoaded(uuid)) {
                 return this.balances.get(uuid);

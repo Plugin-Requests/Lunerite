@@ -1,9 +1,13 @@
 package net.savagedev.lunerite;
 
 import com.zaxxer.hikari.HikariConfig;
-import io.sentry.Sentry;
+import net.savagedev.lunerite.api.LuneriteAPI;
 import net.savagedev.lunerite.commands.LuneriteCmd;
-import net.savagedev.lunerite.commands.subcommands.*;
+import net.savagedev.lunerite.commands.subcommands.AddCmd;
+import net.savagedev.lunerite.commands.subcommands.BalanceCmd;
+import net.savagedev.lunerite.commands.subcommands.HelpCmd;
+import net.savagedev.lunerite.commands.subcommands.RemoveCmd;
+import net.savagedev.lunerite.commands.subcommands.SetCmd;
 import net.savagedev.lunerite.listeners.ConnectionListener;
 import net.savagedev.lunerite.model.BalanceManager;
 import net.savagedev.lunerite.storage.Storage;
@@ -11,10 +15,10 @@ import net.savagedev.lunerite.storage.implementation.file.json.JsonImplementatio
 import net.savagedev.lunerite.storage.implementation.file.yml.YamlImplementation;
 import net.savagedev.lunerite.storage.implementation.sql.mysql.MySqlImplementation;
 import net.savagedev.updatechecker.ResourceUpdateChecker;
-import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -24,9 +28,21 @@ import java.io.InputStream;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.text.DecimalFormat;
 import java.util.logging.Level;
 
-public class Lunerite extends JavaPlugin {
+public class Lunerite extends JavaPlugin implements LuneriteAPI {
+    private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.##");
+
+    private static LuneriteAPI s_Instance;
+
+    public static LuneriteAPI getApi() {
+        if (s_Instance == null) {
+            throw new IllegalStateException("Lunerite has not been initialized yet.");
+        }
+        return s_Instance;
+    }
+
     private final BalanceManager balanceManager = new BalanceManager(this);
 
     private Path langPath = this.getDataFolder().toPath();
@@ -35,26 +51,18 @@ public class Lunerite extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        Sentry.init(options -> options.setDsn("https://abc04e0e22b749fbb6231747949325b4@o514350.ingest.sentry.io/5618839"));
         this.initConfig();
         this.initStorage();
         this.initCommands();
         this.initListeners();
         this.checkUpdates();
-        this.sendTestSentryEvent();
+
+        s_Instance = this;
     }
 
     @Override
     public void onDisable() {
         this.storage.shutdown();
-    }
-
-    private void sendTestSentryEvent() {
-        try {
-            throw new Exception("Test!");
-        } catch (Exception e) {
-            Sentry.captureException(e);
-        }
     }
 
     private void checkUpdates() {
@@ -169,7 +177,24 @@ public class Lunerite extends JavaPlugin {
         return this.storage;
     }
 
+    @Override
+    public void setBalance(Player player, double amount) {
+        this.balanceManager.setBalance(player.getUniqueId(), amount);
+    }
+
+    @Override
+    public double getBalance(Player player) {
+        return this.balanceManager.getBalance(player);
+    }
+
+    @Override
+    public DecimalFormat getDecimalFormat() {
+        return DECIMAL_FORMAT;
+    }
+
     private enum StorageBackend {
-        YAML, JSON, MYSQL
+        YAML,
+        JSON,
+        MYSQL
     }
 }

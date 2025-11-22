@@ -1,0 +1,41 @@
+plugins {
+    id("com.gradleup.shadow").version("9.1.0")
+    id("java")
+}
+
+group = "net.savagedev"
+version = "1.1.0"
+
+repositories {
+    maven("https://oss.sonatype.org/content/repositories/snapshots")
+    maven("https://jitpack.io")
+
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    compileOnly("org.spigotmc:spigot:1.16.1-R0.1-SNAPSHOT")
+
+    implementation("com.github.SavageAvocado:SpigotUpdateChecker:1.0.0")
+    implementation("com.zaxxer:HikariCP:3.4.5")
+}
+
+tasks {
+    shadowJar {
+        archiveFileName.set("${project.name}-${project.version}.jar")
+
+        relocate("com.zaxxer.hikari", "net.savagedev.lunerite.hikaricp")
+
+        minimize()
+    }
+
+    processResources {
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
+
+        from(sourceSets.main.get().resources.srcDirs) {
+            expand(Pair("version", project.version))
+                .include("plugin.yml")
+        }
+    }
+}
