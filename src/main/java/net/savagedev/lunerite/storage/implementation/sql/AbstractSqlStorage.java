@@ -19,7 +19,7 @@ public abstract class AbstractSqlStorage implements StorageImplementation {
 
     @Override
     public void init() {
-        this.config.setDriverClassName("com.mysql.jdbc.jdbc2.optional.MysqlDataSource");
+        this.config.setDriverClassName("com.mysql.cj.jdbc.Driver");
         this.config.setPoolName("lunerite-hikari");
 
         this.config.setMaximumPoolSize(10);
