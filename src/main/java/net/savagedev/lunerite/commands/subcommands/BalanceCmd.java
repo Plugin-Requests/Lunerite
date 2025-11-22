@@ -16,7 +16,7 @@ public class BalanceCmd extends AbstractLuneriteCommand {
     public void execute(CommandSender sender, String label, String[] args) {
         if (args.length == 1) {
             if (sender instanceof Player) {
-                MessageUtils.message(sender, this.getLunerite().getLang().getString("balance").replace("%balance%", String.valueOf(this.getLunerite().getBalanceManager().getBalance(((Player) sender).getUniqueId()).join())));
+                MessageUtils.message(sender, this.getLunerite().getLang().getString("balance").replace("%balance%", String.valueOf(this.getLunerite().getBalanceManager().getBalance((Player) sender))));
             } else {
                 MessageUtils.message(sender, this.getLunerite().getLang().getString("invalid-arguments").replace("%command%", "balance <username>"));
             }
@@ -25,7 +25,7 @@ public class BalanceCmd extends AbstractLuneriteCommand {
 
         final OfflinePlayer player = this.getPlayer(args[1]).join();
 
-        double balance = this.getLunerite().getBalanceManager().getBalance(player.getUniqueId()).join();
+        double balance = this.getLunerite().getBalanceManager().getBalanceAsync(player.getUniqueId()).join();
 
         if (balance == -1) {
             MessageUtils.message(sender, this.getLunerite().getLang().getString("unknown-player"));

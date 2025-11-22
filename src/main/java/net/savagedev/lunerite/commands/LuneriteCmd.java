@@ -25,7 +25,7 @@ public class LuneriteCmd extends AsyncCommandExecutor {
     public void execute(CommandSender sender, String label, String[] args) {
         if (args.length == 0) {
             if (sender instanceof Player) {
-                MessageUtils.message(sender, this.getLunerite().getLang().getString("balance").replace("%balance%", String.valueOf(this.getLunerite().getBalanceManager().getBalance(((Player) sender).getUniqueId()).join())));
+                MessageUtils.message(sender, this.getLunerite().getLang().getString("balance").replace("%balance%", String.valueOf(this.getLunerite().getBalanceManager().getBalance((Player) sender))));
             } else {
                 MessageUtils.message(sender, this.getLunerite().getLang().getString("invalid-arguments").replace("%command%", this.getSuggestion("")));
             }

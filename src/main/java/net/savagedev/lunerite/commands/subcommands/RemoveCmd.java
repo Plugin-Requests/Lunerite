@@ -36,7 +36,7 @@ public class RemoveCmd extends AbstractLuneriteCommand {
 
         final OfflinePlayer player = this.getPlayer(targetName).join();
 
-        double balance = this.getLunerite().getBalanceManager().getBalance(player.getUniqueId()).join();
+        double balance = this.getLunerite().getBalanceManager().getBalanceAsync(player.getUniqueId()).join();
         if (balance == -1) {
             MessageUtils.message(sender, this.getLunerite().getLang().getString("unknown-player"));
         } else {

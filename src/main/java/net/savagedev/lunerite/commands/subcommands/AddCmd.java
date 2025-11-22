@@ -36,7 +36,7 @@ public class AddCmd extends AbstractLuneriteCommand {
 
         final OfflinePlayer player = this.getPlayer(args[1]).join();
 
-        final double balance = this.getLunerite().getBalanceManager().getBalance(player.getUniqueId()).join();
+        final double balance = this.getLunerite().getBalanceManager().getBalanceAsync(player.getUniqueId()).join();
         if (balance == -1) {
             MessageUtils.message(sender, this.getLunerite().getLang().getString("unknown-player"));
         } else {
