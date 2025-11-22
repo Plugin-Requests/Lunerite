@@ -19,6 +19,7 @@ dependencies {
 
     implementation("com.github.SavageAvocado:SpigotUpdateChecker:1.0.0")
     implementation("com.zaxxer:HikariCP:3.4.5")
+    implementation("mysql:mysql-connector-java:8.0.33")
 }
 
 tasks {
