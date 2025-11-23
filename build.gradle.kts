@@ -7,6 +7,7 @@ group = "net.savagedev"
 version = "1.1.0"
 
 repositories {
+    maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
     maven("https://oss.sonatype.org/content/repositories/snapshots")
     maven("https://jitpack.io")
 
@@ -16,6 +17,8 @@ repositories {
 
 dependencies {
     compileOnly("org.spigotmc:spigot:1.16.1-R0.1-SNAPSHOT")
+
+    compileOnly("me.clip:placeholderapi:2.11.7")
 
     implementation("com.github.SavageAvocado:SpigotUpdateChecker:1.0.0")
     implementation("com.zaxxer:HikariCP:3.4.5")

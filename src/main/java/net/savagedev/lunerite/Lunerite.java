@@ -8,6 +8,7 @@ import net.savagedev.lunerite.commands.subcommands.BalanceCmd;
 import net.savagedev.lunerite.commands.subcommands.HelpCmd;
 import net.savagedev.lunerite.commands.subcommands.RemoveCmd;
 import net.savagedev.lunerite.commands.subcommands.SetCmd;
+import net.savagedev.lunerite.hook.papi.LuneritePapiExpansion;
 import net.savagedev.lunerite.listeners.ConnectionListener;
 import net.savagedev.lunerite.model.BalanceManager;
 import net.savagedev.lunerite.storage.Storage;
@@ -15,6 +16,7 @@ import net.savagedev.lunerite.storage.implementation.file.json.JsonImplementatio
 import net.savagedev.lunerite.storage.implementation.file.yml.YamlImplementation;
 import net.savagedev.lunerite.storage.implementation.sql.mysql.MySqlImplementation;
 import net.savagedev.updatechecker.ResourceUpdateChecker;
+import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -56,6 +58,10 @@ public class Lunerite extends JavaPlugin implements LuneriteAPI {
         this.initCommands();
         this.initListeners();
         this.checkUpdates();
+
+        if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+            new LuneritePapiExpansion(this).register();
+        }
 
         s_Instance = this;
     }
